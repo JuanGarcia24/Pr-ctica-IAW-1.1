@@ -6,7 +6,7 @@ source .env
 #Para mostrar los comandos que se van ejecutando
 set -ex 
 
-echo "Instalación de la pila LAMP"
+echo "Instalación de diversas herramientas"
 
 #Actualizo repositorios
 apt update
