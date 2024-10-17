@@ -68,9 +68,10 @@ systemctl reload apache2
 #Creamos el archivo de contraseñas
 sudo htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
 
-#
+#Copiar el archivo 000-default-htaccess.conf a la carpeta de sites-available de Apache
 cp ../conf/000-default-htaccess.conf /etc/apache2/sites-available
 
+#Deshabilitamos el antiguo virtualhost#
 a2dissite 000-default-htaccess.conf
 
 #Habilitamos el nuevo virtualhost
