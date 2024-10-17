@@ -62,15 +62,15 @@ A continuación, se detalla el proceso de instalación y configuración que se l
 
 Después de tener instalada la pila LAMP, el siguiente paso es instalar herramientas adicionales como **PHPMyAdmin** y **Adminer** para gestionar bases de datos, y **GoAccess** para generar informes de estadísticas en tiempo real.
 
-1. **Importación del archivo de variables:**
+1. **Importación del archivo de variables:** Importamos el archivo dónde se almacenan las variables de modo que estén enlazadas con este archivo para su posterior uso.
     ```
     source .env
     ```
 
-2. **Mostrar los comandos que se van ejecutando:**
+2. **Mostrar los comandos que se van ejecutando:** Luego, imprimimos por pantalla con "echo"
     ```
     set -ex 
-    echo "Instalación de la pila LAMP"
+    echo "Instalación de diversas herramientas"
     ```
 
 3. **Actualización de respositorios:**
@@ -80,19 +80,27 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     ``` 
 
 5. **Respuestas Automáticas para la instalación de PHPMyAdmin:**
+    Selección del servidor web que queremos configurar para ejecutar.
     ```
     echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
+    ```
+    Confirmamos que se desea utilizar dbconfig-common para configurar la base de datos.
+    ```
     echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+    ```
+    Seleccionamos la contraseña para phpMyAdmin y la confirmación.
+    ```
     echo "phpmyadmin phpmyadmin/mysql/app-pass password $PHPMYADMIN_APP_PASSWORD" | debconf-set-selections
+    ```
     echo "phpmyadmin phpmyadmin/app-password-confirm password $PHPMYADMIN_APP_PASSWORD" | debconf-set-selections
     ```
 
-6. **Instalación de PHPMyAdmin con sus paquetes:**
+7. **Instalación de PHPMyAdmin con sus paquetes:**
     ```
     sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
     ```
 
-7. **Instalación de Adminer:**
+8. **Instalación de Adminer:**
     ```
     Paso 1 - Creamos la carpeta para Adminer
     mkdir -p /var/www/html/adminer
