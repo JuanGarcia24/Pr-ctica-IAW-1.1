@@ -73,13 +73,13 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     echo "Instalación de diversas herramientas"
     ```
 
-3. **Actualización de respositorios:**
+3. **Actualización de respositorios**
     ```
     apt update
     apt upgrade -y
     ``` 
 
-5. **Respuestas Automáticas para la instalación de PHPMyAdmin:**
+5. **Respuestas Automáticas para la instalación de PHPMyAdmin**
     Selección del servidor web que queremos configurar para ejecutar.
     ```
     echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
@@ -90,8 +90,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     ```
     Seleccionamos la contraseña para phpMyAdmin y la confirmación.
     ```
-    echo "phpmyadmin phpmyadmin/mysql/app-pass password $PHPMYADMIN_APP_PASSWORD" | debconf-set-selections
-    ```
+    echo "phpmyadmin phpmyadmin/mysql/app-pass password $PHPMYADMIN_APP_PASSWORD" | debconf-set-selection   
     echo "phpmyadmin phpmyadmin/app-password-confirm password $PHPMYADMIN_APP_PASSWORD" | debconf-set-selections
     ```
 
