@@ -10,13 +10,16 @@ Repositorio de la Práctica 1.1
 
 El objetivo de esta práctica es instalar una pila LAMP (Linux, Apache, MySQL, PHP), incluyendo también herramientas adicionales cómo **PHPMyAdmin**, **Adminer** y **GoAccess**, automatizando su instalación y configuración mediante scripts de bash. Se realizarán configuraciones de seguridad, como autenticación básica en ciertas rutas del servidor, y la generación de informes en tiempo real de las estadísticas de acceso al servidor web.
 
-## Proceso de Instalación
+## Proceso de Instalación (Directorio Script)
 
 A continuación, se detalla el proceso de instalación y configuración que se lleva a cabo en esta práctica, explicando la función de cada archivo involucrado en el repositorio.
 
 - **`<install_lamp.sh`**: Este script automatiza la instalación de Apache, PHP y MySQL, y configura Apache para que utilice el archivo PHP `index.php`.
 
 - **`install_tools.sh`**: Este script instala y configura las herramientas adicionales necesarias. Utiliza variables definidas en el archivo `.env` para gestionar configuraciones, como contraseñas y nombres de usuarios.
+
+- **`.env`**: Este archivo se encarga de definir variables de entorno. Estas variables contienen datos sensibles o configuraciones específicas que pueden variar según el entorno donde se ejecute la aplicación.
+
 
 ### 1. Instalación de pila LAMP:
 LAMP es la abreviatura para definir un sistema de infraestructura de Internet que usa los siguientes servicios o herramientas:
@@ -46,22 +49,22 @@ Una vez conocidos los principales fundamentos de LAMP, procedemos a la explicaci
     systemctl restart apache2
     ```
 
-5. **Copia el archivo de configuración en la ruta de sitios disponibles de apache:** Procedemos a copiar el archivo 000-default.conf, este archivo define los ajustes del Virtual Host por defecto del servidor web Apache. 
+4. **Copia el archivo de configuración en la ruta de sitios disponibles de apache:** Procedemos a copiar el archivo 000-default.conf, este archivo define los ajustes del Virtual Host por defecto del servidor web Apache. 
     ```
     cp ../conf/000-default.conf /etc/apache2/sites-available
     ```
 
-6. **Instalación de MySQL Server:** Instalamos el sistema gestor de base de datos MySQL, siendo un conocido sistema de gestión de bases de datos relacional.
+5. **Instalación de MySQL Server:** Instalamos el sistema gestor de base de datos MySQL, siendo un conocido sistema de gestión de bases de datos relacional.
     ```
     apt install mysql-server -y
     ```
 
-7. **Copia del archivo de prueba PHP en /var/www/html:** Copiamos el archivo índice de PHP y lo pegamos en /var/www/html ya que es el directorio el cuál se almacenan los archivos web que serán servidos a los usuarios.
+6. **Copia del archivo de prueba PHP en /var/www/html:** Copiamos el archivo índice de PHP y lo pegamos en /var/www/html ya que es el directorio el cuál se almacenan los archivos web que serán servidos a los usuarios.
     ```
     cp ../PHP/index.php /var/www/html
     ```
 
-8. **Modificación del propietario:**  Hacemos un cambio de propietario y el grupo del directorio /var/www/html/adminer, también todos sus contenidos (archivos y subdirectorios) al usuario y grupo www-data, que es el usuario bajo el cual corre Apache. LLegando a la conclusión que tenga los permisos adecuados para gestionar los archivos de Adminer.
+7. **Modificación del propietario:**  Hacemos un cambio de propietario y el grupo del directorio /var/www/html/adminer, también todos sus contenidos (archivos y subdirectorios) al usuario y grupo www-data, que es el usuario bajo el cual corre Apache. LLegando a la conclusión que tenga los permisos adecuados para gestionar los archivos de Adminer.
     ```
     chown -R www-data:www-data /var/www/html/adminer
     ```
@@ -87,7 +90,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     apt upgrade -y
     ``` 
 
-5. **Respuestas Automáticas para la instalación de PHPMyAdmin**:
+4. **Respuestas Automáticas para la instalación de PHPMyAdmin**:
    
     Selección del servidor web que queremos configurar para ejecutar.
     ```
@@ -103,7 +106,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     echo "phpmyadmin phpmyadmin/app-password-confirm password $PHPMYADMIN_APP_PASSWORD" | debconf-set-selections
     ```
 
-7. **Instalación de PHPMyAdmin con sus paquetes:**
+5. **Instalación de PHPMyAdmin con sus paquetes:**
      ```
     sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
     ```
@@ -119,8 +122,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
 - **`php-curl`**: Este paquete proporciona una biblioteca para realizar solicitudes HTTP en PHP. PHPMyAdmin puede necesitar esto para realizar consultas a APIs o servicios web.
 
 
-
-9. **Instalación de Adminer:**
+6. **Instalación de Adminer:**
     ```
     Paso 1 - Creamos la carpeta para Adminer
     mkdir -p /var/www/html/adminer
@@ -135,7 +137,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     chown -R www-data:www-data /var/www/html/adminer
     ```
 
-3. **Creación de una Base de Datos y Usuario MySQL, y también le proporcionamos privilegios:**
+7. **Creación de una Base de Datos y Usuario MySQL, y también le proporcionamos privilegios:**
    IMPORTANTE: En los terminos $DB_NAME, $DB_USER y $DB_PASSWORD son variables las cuales están definidas en el archivo .env
     ```
     mysql -u root <<< "DROP DATABASE IF EXISTS $DB_NAME"
@@ -146,67 +148,81 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     mysql -u root <<< "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%'"
     ```
 
-5. **Instalación de GoAccess:** GoAccess se utiliza para el análisis de registros y proporciona información valiosa sobre el tráfico del sitio web.
+8. **Instalación de GoAccess:** GoAccess se utiliza para el análisis de registros y proporciona información valiosa sobre el tráfico del sitio web.
     ```
     apt install goaccess -y
     ```
 
-6. **Creamos un directorio para guardar los informes estadísticos:**
+9. **Creamos un directorio para guardar los informes estadísticos:**
     ```
     mkdir -p /var/www/html/stats
     ```
 
-7. **Creación de un archivo HTML a tiempo real en segundo plano:** El siguiente comando analiza el archivo de registro access.log y crea un archivo HTML que se actualiza a tiempo real.
+10. **Creación de un archivo HTML a tiempo real en segundo plano:** El siguiente comando analiza el archivo de registro access.log y crea un archivo HTML que se actualiza a tiempo real.
     ```
     goaccess /var/log/apache2/access.log -o /var/www/html/stats/index.html --log-format=COMBINED --real-time-html --daemonize
     ```
 
-8. **Control de acceso a un directorio con autenticación básica:** Ejecutamos este comando de forma que implementamos medidas de seguridad en el servidor web.
+11. **Control de acceso a un directorio con autenticación básica:** Ejecutamos este comando de forma que implementamos medidas de seguridad en el servidor web.
     ```
     cp ../conf/000-default-stats.conf /etc/apache2/sites-available
     ```
 
-9. **Deshabilitar el virtualhost que viene por defecto:**
+12. **Deshabilitar el virtualhost que viene por defecto:**
     ```
     a2dissite 000-default.conf
     ```
 
-10. **Habilitar el nuevo virtualhost creado:**
+13. **Habilitar el nuevo virtualhost creado:**
     ```
     a2ensite 000-default-stats.conf
     ```
 
-11. **Reinicio del servicio apache:**
+14. **Reinicio del servicio apache:**
     ```
     systemctl reload apache2
     ```
 
-12. **Creamos el archivo de contraseñas:** Este comando se utiliza para crear un archivo de contraseñas que almacena los nombres de usuario y las contraseñas necesarias para la autenticación básica en un servidor Apache.
+15. **Creamos el archivo de contraseñas:** Este comando se utiliza para crear un archivo de contraseñas que almacena los nombres de usuario y las contraseñas necesarias para la autenticación básica en un servidor Apache.
     ```
     sudo htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
     ```
 
-13. **Copia del archivo 000-default-htaccess.conf a la carpeta de sites-available de Apache:** El objetivo es que se gestionen las reglas de reescritura y acceso del sitio web.
+16. **Copia del archivo 000-default-htaccess.conf a la carpeta de sites-available de Apache:** El objetivo es que se gestionen las reglas de reescritura y acceso del sitio web.
     ```
     cp ../conf/000-default-htaccess.conf /etc/apache2/sites-available
     ```
 
-14. **Deshabilitar el antiguo virtualhost:**
+17. **Deshabilitar el antiguo virtualhost:**
     ```
     a2dissite 000-default-htaccess.conf
     ```
 
-15. **Habilitar el nuevo virtualhost:**
+18. **Habilitar el nuevo virtualhost:**
     ```
     a2ensite 000-default-htaccess.conf
     ```
 
-16. **Copia del archivo .htacess a /var/www/html/stats:** para el directorio stats. Al copiar el archivo .htaccess, se asegura que se apliquen las directrices adecuadas para manejar las solicitudes y proteger los recursos dentro de ese directorio.
+19. **Copia del archivo .htacess a /var/www/html/stats:** para el directorio stats. Al copiar el archivo .htaccess, se asegura que se apliquen las directrices adecuadas para manejar las solicitudes y proteger los recursos dentro de ese directorio.
     ```
     cp ../conf/.htaccess /var/www/html/stats
     ```
+### 3. Contenido archivo con extensión .env:
+    ```
+#Configuramos una contraseña para la variable
+PHPMYADMIN_APP_PASSWORD=password
 
-### 3. Configuración de Virtual Hosts 
+# Variables de configuración
+DB_USER=juan
+DB_PASSWORD=juan23
+DB_NAME=moodle
+
+#Defino variables
+STATS_USERNAME=usuario
+STATS_PASSWORD=juan23
+    ```
+    
+### 4. Configuración de Virtual Hosts 
 
 El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a ciertas rutas utilizando **autenticación básica**.
 
