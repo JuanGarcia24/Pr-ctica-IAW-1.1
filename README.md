@@ -21,14 +21,12 @@ A continuación, se detalla el proceso de instalación y configuración que se l
 ### 1. Instalación de pila LAMP:
 
 1. **Actualización de repositorios:**
-
     ```bash
     apt update
     apt upgrade -y
     ```
     
 2. **Instalación de Servidor Web Apache y activación del módulo rewrite:**
-    
     ```bash
     apt install apache2 -y
     a2enmod rewrite
@@ -61,7 +59,7 @@ A continuación, se detalla el proceso de instalación y configuración que se l
     chown -R www-data:www-data /var/www/html/adminer
     ```
 
-### 2. Configuración de Herramientas Adicionales
+### 2. Configuración de Lampp y Herramientas Adicionales
 
 Después de tener instalada la pila LAMP, el siguiente paso es instalar herramientas adicionales como **PHPMyAdmin** y **Adminer** para gestionar bases de datos, y **GoAccess** para generar informes de estadísticas en tiempo real.
 
@@ -180,7 +178,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     cp ../conf/.htaccess /var/www/html/stats
     ```
 
-### 3. Configuración de Virtual Hosts y Seguridad
+### 3. Configuración de Virtual Hosts 
 
 El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a ciertas rutas utilizando **autenticación básica**.
 
@@ -216,9 +214,3 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
     AuthUserFile "/etc/apache2/.htpasswd"
     Require valid-user
     ```
-
-El script **`install_tools.sh`** se encarga de crear el archivo `.htpasswd` y establecer un usuario y contraseña para proteger la sección de estadísticas.
-
-```
-sudo htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
-```
