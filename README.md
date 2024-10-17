@@ -208,19 +208,21 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
     cp ../conf/.htaccess /var/www/html/stats
     ```
 ### 3. Contenido archivo con extensión .env:
+
     ```
-#Configuramos una contraseña para la variable
+Configuración de una contraseña para la variable
 PHPMYADMIN_APP_PASSWORD=password
 
-# Variables de configuración
+Variables de configuración
 DB_USER=juan
 DB_PASSWORD=juan23
 DB_NAME=moodle
 
-#Defino variables
+Definición de variables
 STATS_USERNAME=usuario
 STATS_PASSWORD=juan23
-    ```
+    ```    
+
     
 ### 4. Configuración de Virtual Hosts 
 
