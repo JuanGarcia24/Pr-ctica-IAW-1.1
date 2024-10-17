@@ -20,40 +20,40 @@ A continuación, se detalla el proceso de instalación y configuración que se l
 
 ### 1. Instalación de pila LAMP:
 
-1. **Actualización de repositorios: Actualizamos la lista de paquetes y actualizamos los paquetes instalados a sus últimas versiones disponibles.**
+1. **Actualización de repositorios:** Actualizamos la lista de paquetes y actualizamos los paquetes instalados a sus últimas versiones disponibles.
     ```
     apt update
     apt upgrade -y
     ```
     
-2. **Instalación de Servidor Web Apache y activación del módulo rewrite: Instalamos el servidor web apache2 y activamos el módulo rewrite de modo que permita reescribir las URLs y configurar reglas de redireccionamiento, para hacer las URLS más amigables y mejorar el SEO de los sitios web.**
+2. **Instalación de Servidor Web Apache y activación del módulo rewrite:** Instalamos el servidor web apache2 y activamos el módulo rewrite de modo que permita reescribir las URLs y configurar reglas de redireccionamiento, para hacer las URLS más amigables y mejorar el SEO de los sitios web.
     ```
     apt install apache2 -y
     a2enmod rewrite
     ```
 
-3. **Instalación de PHP y reinicio de servicio apache: Instalamos PHP para que el servidor web Apache pueda procesar código PHP**
+3. **Instalación de PHP y reinicio de servicio apache:** Instalamos PHP para que el servidor web Apache pueda procesar código PHP.
     ```
     apt install php libapache2-mod-php php-mysql -y
     systemctl restart apache2
     ```
 
-5. **Copia el archivo de configuración en la ruta de sitios disponibles de apache: Procedemos a copiar el archivo 000-default.conf, este archivo define los ajustes del Virtual Host por defecto del servidor web Apache** 
+5. **Copia el archivo de configuración en la ruta de sitios disponibles de apache:** Procedemos a copiar el archivo 000-default.conf, este archivo define los ajustes del Virtual Host por defecto del servidor web Apache. 
     ```
     cp ../conf/000-default.conf /etc/apache2/sites-available
     ```
 
-6. **Instalación de MySQL Server: Instalamos el sistema gestor de base de datos MySQL, siendo un conocido sistema de gestión de bases de datos relacional**
+6. **Instalación de MySQL Server:** Instalamos el sistema gestor de base de datos MySQL, siendo un conocido sistema de gestión de bases de datos relacional.
     ```
     apt install mysql-server -y
     ```
 
-7. **Copia del archivo de prueba PHP en /var/www/html: Copiamos el archivo índice de PHP y lo pegamos en /var/www/html ya que es el directorio el cuál se almacenan los archivos web que serán servidos a los usuarios**
+7. **Copia del archivo de prueba PHP en /var/www/html:** Copiamos el archivo índice de PHP y lo pegamos en /var/www/html ya que es el directorio el cuál se almacenan los archivos web que serán servidos a los usuarios.
     ```
     cp ../PHP/index.php /var/www/html
     ```
 
-8. **Modificación del propietario: Hacemos un cambio de propietario y el grupo del directorio /var/www/html/adminer, también todos sus contenidos (archivos y subdirectorios) al usuario y grupo www-data, que es el usuario bajo el cual corre Apache. LLegando a la conclusión que tenga los permisos adecuados para gestionar los archivos de Adminer**
+8. **Modificación del propietario:**  Hacemos un cambio de propietario y el grupo del directorio /var/www/html/adminer, también todos sus contenidos (archivos y subdirectorios) al usuario y grupo www-data, que es el usuario bajo el cual corre Apache. LLegando a la conclusión que tenga los permisos adecuados para gestionar los archivos de Adminer.
     ```
     chown -R www-data:www-data /var/www/html/adminer
     ```
