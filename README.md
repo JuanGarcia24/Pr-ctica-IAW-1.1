@@ -19,6 +19,14 @@ A continuación, se detalla el proceso de instalación y configuración que se l
 - **`install_tools.sh`**: Este script instala y configura las herramientas adicionales necesarias. Utiliza variables definidas en el archivo `.env` para gestionar configuraciones, como contraseñas y nombres de usuarios.
 
 ### 1. Instalación de pila LAMP:
+LAMP es la abreviatura para definir un sistema de infraestructura de Internet que usa los siguientes servicios o herramientas:
+
+- **`Linux (Sistema Operativo)`**:
+- **`Apache (Servidor Web)`**:
+- **`MySQL o MariaDB (Sistema Gestor de Bases de Datos)`**:
+- **`PHP (Lenguaje de programación)`**:
+
+Una vez conocidos los principales fundamentos de LAMP, procedemos a la explicación y descripción de los pasos a seguir para instalarlo.  
 
 1. **Actualización de repositorios:** Actualizamos la lista de paquetes y actualizamos los paquetes instalados a sus últimas versiones disponibles.
     ```
