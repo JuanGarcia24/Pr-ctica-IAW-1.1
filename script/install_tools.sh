@@ -65,7 +65,7 @@ a2ensite 000-default-stats.conf
 #Reiniciamos el servicio
 systemctl reload apache2
 
-#Creamos el archivo de contraseñas
+#Creación del archivo .htpasswd para establecer un usuario y contraseña para proteger la sección de estadísticas
 sudo htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
 
 #Copiar el archivo 000-default-htaccess.conf a la carpeta de sites-available de Apache
