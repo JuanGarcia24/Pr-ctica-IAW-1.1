@@ -4,7 +4,20 @@ Repositorio de la Práctica 1.1
 
 # Estructura de la pŕactica:
 
-Práctica-IAW-1.1 ├── .gitignore ├── conf │ ├── .htaccess │ ├── 000-default-htaccess.conf │ ├── 000-default-stats.conf │ └── 000-default.conf ├── PHP │ └── index.php └── script ├── .env ├── .env.example ├── install_lamp.sh └── install_tools.sh
+Práctica-IAW-1.1
+├── .gitignore
+├── conf
+│   ├── .htaccess
+│   ├── 000-default-htaccess.conf
+│   ├── 000-default-stats.conf
+│   └── 000-default.conf
+├── PHP
+│   └── index.php
+└── script
+    ├── .env
+    ├── .env.example
+    ├── install_lamp.sh
+    └── install_tools.sh
 
 ## Objetivo de la Práctica
 
