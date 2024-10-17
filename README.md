@@ -13,9 +13,9 @@ El objetivo de esta práctica es instalar una pila LAMP (Linux, Apache, MySQL, P
 
 A continuación, se detalla el proceso de instalación y configuración que se lleva a cabo en esta práctica, explicando la función de cada archivo involucrado en el repositorio.
 
-- **`install_lamp.sh`**: Este script automatiza la instalación de Apache, PHP y MySQL, y configura Apache para que utilice el archivo PHP de prueba `index.php`.
-
 ### 1. Instalación de pila LAMP:
+
+- **`install_lamp.sh`**: Este script automatiza la instalación de Apache, PHP y MySQL, y configura Apache para que utilice el archivo PHP de prueba `index.php`.
 
 1. **Actualización de repositorios:**
 
