@@ -2,6 +2,10 @@
 Repositorio de la Práctica 1.1
 # Práctica Aplicaciones Web - Instalación de LAMP con Herramientas Adicionales
 
+# Estructura de la pŕactica:
+
+Práctica-IAW-1.1 ├── .gitignore ├── conf │ ├── .htaccess │ ├── 000-default-htaccess.conf │ ├── 000-default-stats.conf │ └── 000-default.conf ├── PHP │ └── index.php └── script ├── .env ├── .env.example ├── install_lamp.sh └── install_tools.sh
+
 ## Objetivo de la Práctica
 
 El objetivo de esta práctica es instalar una pila LAMP (Linux, Apache, MySQL, PHP), incluyendo también herramientas adicionales cómo **PHPMyAdmin**, **Adminer** y **GoAccess**, automatizando su instalación y configuración mediante scripts de bash. Se realizarán configuraciones de seguridad, como autenticación básica en ciertas rutas del servidor, y la generación de informes en tiempo real de las estadísticas de acceso al servidor web.
