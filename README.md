@@ -2,7 +2,8 @@
 Repositorio de la Práctica 1.1
 # Práctica Aplicaciones Web - Instalación de LAMP con Herramientas Adicionales
 
-# Estructura de la pŕactica:
+## Estructura de la pŕactica:
+![Estructura](./images/estructura.png)
 
 
 ## Objetivo de la Práctica
@@ -13,7 +14,9 @@ El objetivo de esta práctica es instalar una pila LAMP (Linux, Apache, MySQL, P
 
 A continuación, se detalla el proceso de instalación y configuración que se lleva a cabo en esta práctica, explicando la función de cada archivo involucrado en el repositorio.
 
-- **`install_lamp.sh`**: Este script automatiza la instalación de Apache, PHP y MySQL, y configura Apache para que utilice el archivo PHP de prueba `index.php`.
+- **`install_lamp.sh`**: Este script automatiza la instalación de Apache, PHP y MySQL, y configura Apache para que utilice el archivo PHP `index.php`.
+
+- **`install_tools.sh`**: Este script instala y configura las herramientas adicionales necesarias. Utiliza variables definidas en el archivo `.env` para gestionar configuraciones, como contraseñas y nombres de usuarios.
 
 ### 1. Instalación de pila LAMP:
 
@@ -61,8 +64,6 @@ A continuación, se detalla el proceso de instalación y configuración que se l
 ### 2. Configuración de Herramientas Adicionales
 
 Después de tener instalada la pila LAMP, el siguiente paso es instalar herramientas adicionales como **PHPMyAdmin** y **Adminer** para gestionar bases de datos, y **GoAccess** para generar informes de estadísticas en tiempo real.
-
-- **`install_tools.sh`**: Este script instala y configura las herramientas adicionales necesarias. Utiliza variables definidas en el archivo `.env` para gestionar configuraciones, como contraseñas y nombres de usuarios.
 
 1. **Importación del archivo de variables:**
     ```
@@ -183,8 +184,9 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
 
 El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a ciertas rutas utilizando **autenticación básica**.
 
-- **`000-default.conf`**: Este archivo de configuración define el virtual host principal de Apache, sirviendo el contenido de `/var/www/html`.
-    ```apache
+- **`000-default.conf`**: Este archivo de configuración define el virtual host principal de Apache, referenciando el contenido de `/var/www/html`.
+
+    ```
     <VirtualHost *:80>
         DocumentRoot /var/www/html
         DirectoryIndex index.php index.html
@@ -194,7 +196,8 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
     ```
 
 - **`000-default-stats.conf`**: Este archivo de configuración es específico para el acceso a la carpeta de estadísticas generadas por GoAccess. Además, implementa **autenticación básica** utilizando un archivo `.htpasswd`.
-    ```apache
+
+    ```
     <Directory "/var/www/html/stats">
         AuthType Basic
         AuthName "Acceso restringido"
@@ -205,7 +208,8 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
     ```
 
 - **`.htaccess`**: El archivo `.htaccess` también establece reglas de autenticación básica para proteger directorios.
-    ```apache
+
+    ```
     AuthType Basic
     AuthName "Acceso restringido"
     AuthBasicProvider file
@@ -215,5 +219,6 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
 
 El script **`install_tools.sh`** se encarga de crear el archivo `.htpasswd` y establecer un usuario y contraseña para proteger la sección de estadísticas.
 
-```bash
+```
 sudo htpasswd -bc /etc/apache2/.htpasswd $STATS_USERNAME $STATS_PASSWORD
+```
