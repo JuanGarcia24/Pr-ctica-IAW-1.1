@@ -210,7 +210,7 @@ Después de tener instalada la pila LAMP, el siguiente paso es instalar herramie
 
 El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a ciertas rutas utilizando **autenticación básica**.
 
-- **`000-default.conf`**: Este archivo de configuración define el virtual host principal de Apache, referenciando el contenido de `/var/www/html`.
+- **`000-default.conf`**: Este archivo de configuración define el virtual host principal de Apache en el puerto 80, referenciando el contenido de `/var/www/html`.
 
     ```
     <VirtualHost *:80>
@@ -221,7 +221,7 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
     </VirtualHost>
     ```
 
-- **`000-default-stats.conf`**: Este archivo de configuración es específico para el acceso a la carpeta de estadísticas generadas por GoAccess. Además, implementa **autenticación básica** utilizando un archivo `.htpasswd`.
+- **`000-default-stats.conf`**: Configura un virtual host específico para el acceso a la sección de estadísticas, protegido con autenticación básica.
 
     ```
     <Directory "/var/www/html/stats">
@@ -233,8 +233,7 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
     </Directory>
     ```
 
-- **`.htaccess`**: El archivo `.htaccess` también establece reglas de autenticación básica para proteger directorios.
-
+- **`.htaccess`**: Define la autenticación básica para acceder a un directorio protegido.
     ```
     AuthType Basic
     AuthName "Acceso restringido"
@@ -242,3 +241,22 @@ El siguiente paso es configurar los **Virtual Hosts** y proteger el acceso a cie
     AuthUserFile "/etc/apache2/.htpasswd"
     Require valid-user
     ```
+
+- **`000-default-htaccess.conf`**: Archivo de configuración para habilitar el uso de `.htaccess` en un directorio específico de Apache.
+    ```
+  <VirtualHost *:80>
+  #ServerName www.example.com
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/html
+  DirectoryIndex index.php index.html
+  <Directory "/var/www/html/stats">
+  AllowOverride All
+  </Directory>
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>
+    ```
+
+### 4. Configuración de Variables 
+
